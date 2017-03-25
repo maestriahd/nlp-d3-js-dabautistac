@@ -4,11 +4,11 @@ var router = express.Router();
 var request = require('request');
 var async = require('async');
 
-const API_KEY = '';  // constante para guardar el API key del omeka
+const API_KEY = 'f6d246b287fe8928401a1528b66385917d7758ea';  // constante para guardar el API key del omeka
 
 // objeto que guarda la configuración de la conexion al Omeka
 var server = {
-  baseUrl: '', // la URL del API (http://miomeka.org/api)
+  baseUrl: 'http://dabautistac.omeka.net/api', // la URL del API (http://miomeka.org/api)
   uri: '',
   method: 'GET', // método que vamos a usar
   qs: {
@@ -44,6 +44,7 @@ router.get('/', function(req, res) {
         }
       });
     },
+
     // Obtiene la información de la colección
     // La función recibe lo entregado en el anterior paso en el primer parámetro
     // `item`
@@ -76,7 +77,7 @@ router.get('/', function(req, res) {
       // crea un nuevo objeto de configuración para Request con la información
       // del archivo a descargar
       var files = {
-        uri: item.files.url, // extrae la URL del obejto item
+        uri:item.files.url, // extrae la URL del obejto item
         method: 'GET',
         qs: {
           key: API_KEY
@@ -108,12 +109,14 @@ router.get('/', function(req, res) {
     if (err){
       console.log(err);
     }
+
+
     // Hace el render de la vista con la informacion obtenida del Omeka
-    res.render('omeka', {
+    res.render('omekaCurrie', {
       item: item,
       items: items,
       collection: collection,
-      files: files
+  files: files
     });
   });
 });

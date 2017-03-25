@@ -12,11 +12,13 @@ var hbs = require('hbs');
 // cuando un cliente hace una petición. Los archivos están guardados
 // en el directorio `routes`
 var index = require('./routes/index');
-var users = require('./routes/users');
-var gatos = require('./routes/gato');
-var omeka = require('./routes/omeka');
+var Currie = require('./routes/Currie');
+var Hirshman = require('./routes/Hirshman');
+var omekaHirshman = require('./routes/omekaHirshman');
+var omekaCurrie = require('./routes/omekaCurrie')
 var d3 = require('./routes/d3');
 var nlp = require('./routes/nlp');
+
 // **** PARA AGREGAR UNA NUEVA RUTA  ****
 // descomente y cambie los valores de la siguiente línea
 //var NOMBRE_RUTA = require('./routes/ARCHIVO_RUTA');
@@ -52,9 +54,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // INTEGRACION DE LAS RUTAS EN LA APLICACION
 // ejecuta el codigo de JS cuando es llamado desde una URL por el cliente
 app.use('/', index);
-app.use('/hola', users);
-app.use('/gatos', gatos);
-app.use('/omeka', omeka);
+app.use('/Currie', Currie);
+app.use('/Hirshman', Hirshman);
+app.use('/omekaHirshman', omekaHirshman);
+app.use('/omekaCurrie', omekaCurrie);
 app.use('/d3', d3);
 app.use('/nlp', nlp);
 // **** PARA AGREGAR UNA NUEVA RUTA  ****
@@ -75,6 +78,7 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
 
   // render the error page
   res.status(err.status || 500);

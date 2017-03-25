@@ -1,28 +1,105 @@
-<h1>NLP</h1>
+<h1>NLP LAUCHLIN CURRIE Y ALBERT HIRSCHMAN</h1>
 
-<!-- presenta la lista de sustantivos -->
-<h1>Sustantivos [{{nouns.length}}]</h1>
+<div class="nlp">
+  <div id="viz"></div>
+  <!-- carga desde el servidor de D3 la librería -->
+  <!-- cabe anotar que esta podría estar alojada localmente en la carpeta -->
+  <!-- public del proyecto -->
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script type="text/javascript">
+  (function() {
+    // map tomado de p5.js
+    function map(n, start1, stop1, start2, stop2) {
+      return ((n-start1)/(stop1-start1))*(stop2-start2)+start2;
+    };
+    // Función encargadad de la visualización de datos por medio de D3
+    function viz(data){
+      // selecciona la división donde se inyectará el SVG
+      var svg = d3.select('#viz')
+        .append('svg') // agrega un elemento SVG
+        .attr('width', 400) // al SVG le agrega el atributo ancho de 400px
+        .attr('height', 200) // al SVG le agrega el atributo alto de 200px
+      var elem = svg.selectAll('g') // selecciona todos los elementos `g` (grupos)
+        .data(data) // enlaza los datos
+      var elemEnter = elem.enter()
+          .append('g') // agrega un grupo
+          .attr('transform', function(d,i){ // aplica una transformación al elemento
+            return "translate("+(200*i+60)+", 80)" // calcula la posción relativo a
+                                                  // los datos
+          })
+      var circulo = elemEnter.append('circle') // agrega un circulo
+        .attr('stroke', 'black') // la línea de contorno será negra
+        .attr('fill', function(d){ // el color de relleno se aplica según el
+                                   // resultado de esta función
+          if(d.name === 'Personas'){     // si el elemento actual es el sustantivo
+            return 'rgb(50, 74, 49)'  // el color de relleno será verde
+          } else {          // de lo contrario
+            return 'red'    // el color de relleno será rojo
+          }
+        })
+        .attr('r', function(d){ // el radio dependerá de los items en el array
+          return map(d.count, 0, 3000, 20, 1500)
+        })
+      // crea los textos etiquetando cada uno de los círculos
+      var txt = elemEnter.append('text') //agrega un elemento de tipo text
+        .attr('dy', -62) // la posición en y
+        .attr('dx', -50) // la posición en x
+        .attr('fill', 'black')
+        .text(function(d){ // extrae el texto del parametro `name`
+          return d.name
+        })
+    }
+    // para inyectar información detallada del NLP
+    // var data = {
+    //   sustantivos: {{{ nouns}}}
+    // }
+    var data = [
+
+    {
+        count: {{people.length}},
+        name: 'Personas'
+
+      },
+      {
+        count: {{places.length}},
+        name: 'Lugares'
+      }
+    ]
+    viz(data)
+  })();
+  </script>
+
+
+
+
+<!-- presenta la lista de lugares-->
+<h1>Lugares [{{places.length}}]</h1>
 <ul>
-  {{#each nouns.list}}
+  {{#each places.list}}
   <li>
-    {{#each this.terms}}
-      {{this.text}}
+      {{this}}
+    </li>
     {{/each}}
-  </li>
-  {{/each}}
-</ul>
+  </ul>
 
 <!-- presenta la lista de personas -->
 <h1>Personas [{{people.length}}]</h1>
 <ul>
   {{#each people.list}}
   <li>
-    {{#each this.terms}}
-      {{this.text}}
-    {{/each}}
+    {{this}}
   </li>
   {{/each}}
 </ul>
 
 <h1>Texto original</h1>
 {{txt}}
+
+<a href="/">
+  <h2>index</h2>
+</a>
+<a href="/Currie">LAUCHLIN CURRIE</a> &nbsp <a href="/Hirshman">ALBERT HIRSCHMAN</a> &nbsp
+<a href="/omekaCurrie">LAUCHLIN CURRIE OMEKA</a> &nbsp <a href="/omekaHirshman">ALBERT HIRSCHMAN OMEKA</a>
+&nbsp <a href="/d3">D3 LAUCHLIN CURRIE Y ALBERT HIRSCHMAN</a>
+<br> <br> <a href="/nlp">NLP LAUCHLIN CURRIE Y ALBERT HIRSCHMAN</a>
+<br> <br>
